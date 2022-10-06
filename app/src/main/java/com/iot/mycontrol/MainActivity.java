@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         btn_rst();
                         break;
                     case R.id.btn_send:
-                        btn_send(edittext_send.getText().toString());
+                        btn_commandSend();
                         break;
                     case R.id.btn_clear:
                         btn_clear();
@@ -136,13 +136,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {
-                    case 0:
+                    case 0: //wifi数据
                         String[] split = msg.getData().getString("msg").split(" ");
                         Log.d("wifi_data", String.valueOf(msg.getData().getString("msg")));
                         textView2_temp.setText(split[0] + "℃");
                         textView2_humi.setText(split[1] + "RH%");
                         break;
-                    case 1:
+                    case 1: //接受区数据
                         temp_str = textView_receive.getText().toString();
                         textView_receive.setText(temp_str + "\r\n" + msg.getData().getString("msg"));
                         break;
@@ -204,78 +204,132 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void btn_led1() {
-        if (led_en1 == 0) {
-            btn_send("open_led1");
-            btn_led1.setText("关灯");
-            led_en1 = 1;
-        } else if (led_en1 == 1) {
-            btn_led1.setText("开灯");
-            btn_send("close_led1");
-            led_en1 = 0;
+        try {
+            if (led_en1 == 0) {
+                btn_send("open_led1");
+            } else if (led_en1 == 1) {
+                btn_send("close_led1");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (led_en1 == 0) {
+                btn_led1.setText("关灯");
+                led_en1 = 1;
+            } else if (led_en1 == 1) {
+                btn_led1.setText("开灯");
+                led_en1 = 0;
+            }
         }
+
     }
 
     void btn_led2() {
-        if (led_en2 == 0) {
-            btn_send("open_led2");
-            btn_led2.setText("关灯");
-
-            led_en2 = 1;
-        } else if (led_en2 == 1) {
-            btn_led2.setText("开灯");
-            btn_send("close_led2");
-            led_en2 = 0;
+        try {
+            if (led_en2 == 0) {
+                btn_send("open_led2");
+            } else if (led_en2 == 1) {
+                btn_send("close_led2");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (led_en2 == 0) {
+                btn_led2.setText("关灯");
+                led_en2 = 1;
+            } else if (led_en2 == 1) {
+                btn_led2.setText("开灯");
+                led_en2 = 0;
+            }
         }
+
     }
 
     void btn_led3() {
-        if (led_en3 == 0) {
-            btn_send("open_led3");
-            btn_led3.setText("关灯");
-            led_en3 = 1;
-        } else if (led_en3 == 1) {
-            btn_led3.setText("开灯");
-            btn_send("close_led3");
-            led_en3 = 0;
+        try {
+            if (led_en3 == 0) {
+                btn_send("open_led3");
+            } else if (led_en3 == 1) {
+                btn_send("close_led3");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (led_en3 == 0) {
+                btn_led3.setText("关灯");
+                led_en3 = 1;
+            } else if (led_en3 == 1) {
+                btn_led3.setText("开灯");
+                led_en3 = 0;
+            }
         }
+
     }
 
     void btn_beep() {
-        if (beep_en == 0) {
-            btn_send("open_beep");
-            btn_beep.setText("关闭");
-            beep_en = 1;
-        } else if (beep_en == 1) {
-            btn_beep.setText("开启");
-            btn_send("close_beep");
-            beep_en = 0;
+        try {
+            if (beep_en == 0) {
+                btn_send("open_beep");
+            } else if (beep_en == 1) {
+                btn_send("close_beep");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (beep_en == 0) {
+                btn_beep.setText("关闭");
+                beep_en = 1;
+            } else if (beep_en == 1) {
+                btn_beep.setText("开启");
+                beep_en = 0;
+            }
         }
     }
 
     void btn_temp() {
-        // 0-1-0-1循环
-        if (temp_en == 0) {
-            btn_send("open_dht11");
-            btn_temp.setText("停止检测");
-            temp_en = 1;
-        } else if (temp_en == 1) {
-            btn_temp.setText("开始检测");
-            btn_send("close_dht11");
-            temp_en = 0;
+        try {
+            if (temp_en == 0) {
+                btn_send("open_dht11");
+            } else if (temp_en == 1) {
+                btn_send("close_dht11");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (temp_en == 0) {
+                btn_temp.setText("停止检测");
+                temp_en = 1;
+            } else if (temp_en == 1) {
+                btn_temp.setText("开始检测");
+                temp_en = 0;
+            }
         }
     }
 
     @SuppressLint("SetTextI18n")
     void btn_rst() {
-        btn_send("reset_all");
-        btn_led1.setText("亮灯");
-        btn_led2.setText("亮灯");
-        btn_led3.setText("亮灯");
-        btn_beep.setText("开启");
-        btn_temp.setText("开始检测");
-        textView2_temp.setText("0℃");
-        textView2_humi.setText("0RH%");
-        led_en1 = led_en2 = led_en3 = beep_en = temp_en = 0;
+        try {
+            btn_send("reset_all");
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            btn_led1.setText("亮灯");
+            btn_led2.setText("亮灯");
+            btn_led3.setText("亮灯");
+            btn_beep.setText("开启");
+            btn_temp.setText("开始检测");
+            textView2_temp.setText("0 ℃");
+            textView2_humi.setText("0 RH%");
+            led_en1 = led_en2 = led_en3 = beep_en = temp_en = 0;
+        }
+    }
+
+    void btn_commandSend(){
+        try {
+            btn_send(edittext_send.getText().toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     void btn_clear() {

@@ -82,7 +82,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         super.exceptionCaught(ctx, cause);
         System.out.println("出现异常了.................");
-        TimeUnit.SECONDS.sleep(10);
+        TimeUnit.SECONDS.sleep(3);
         //nettyClient.startNetty(context);
         cause.printStackTrace();
     }

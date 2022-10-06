@@ -6,6 +6,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.CharsetUtil;
 
 import java.net.InetSocketAddress;
@@ -45,7 +46,7 @@ public class NettyClient {
                     @Override
                     protected void initChannel(io.netty.channel.socket.SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline()
-//                                .addLast(new IdleStateHandler(20, 20, 20, TimeUnit.SECONDS))
+//                                .addLast(new IdleStateHandler(1, 1, 1, TimeUnit.SECONDS))
                                 .addLast("encoder", new StringEncoder(CharsetUtil.UTF_8))
                                 .addLast("decoder", new StringDecoder(CharsetUtil.UTF_8))
                                 .addLast(new NettyClientHandler());
@@ -65,7 +66,7 @@ public class NettyClient {
             System.out.println("连接失败" + e.toString());
             //这里最好暂停一下。不然会基本属于毫秒时间内执行很多次。
             //造成重连失败
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(1);
 
             return false;
         }
